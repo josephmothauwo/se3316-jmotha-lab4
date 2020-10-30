@@ -5,12 +5,13 @@ var courses = JSON.parse(data)
 const express = require('express');
 const app = express(); 
 const port = 3000
+const router = express.Router();
 
 // setup serving frontend code
 app.use('/',express.static('static'));
 
 // get list of classes
-app.get('/api/courses/all', (req, res) => {
+router.get('/all', (req, res) => {
     console.log(`GET request from ${req.url}`);
     const allCourses = []
     for(course of courses){
@@ -20,7 +21,7 @@ app.get('/api/courses/all', (req, res) => {
 });
 
 // get courses codes by subject
-app.get('/api/courses/:subject', (req, res) => {
+router.get('/:subject', (req, res) => {
     console.log(`GET request from ${req.url}`);
     // filter course codes
     course_codes = []
@@ -36,7 +37,7 @@ app.get('/api/courses/:subject', (req, res) => {
 });
 
 // get time table entry by subject, course code and component
-app.get('/api/courses/:subject/:course_code/:course_component?', (req, res) => {
+router.get('/:subject/:course_code/:course_component?', (req, res) => {
     console.log(`GET request from ${req.url}`);
     // filter course codes
     tableEntry = []
@@ -63,6 +64,8 @@ app.get('/api/courses/:subject/:course_code/:course_component?', (req, res) => {
     }
     res.send(tableEntry)
 });
+
+app.use('/api/courses', router);
 
 app.listen(port, () => {
     console.log(courses[0]);
