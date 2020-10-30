@@ -17,21 +17,27 @@ app.get('/api/courses', (req, res) => {
 
 app.get('/api/courses/all', (req, res) => {
     console.log(`GET request from ${req.url}`);
-    Allcourses = []
-    for(couse of courses){
-        Allcourses.push({subject: couse["subject"], className: couse['className']})
+    const allCourses = []
+    for(course of courses){
+        allCourses.push({subject: course["subject"], className: course['className']})
     }
-    res.send(Allcourses);
+    res.send(allCourses);
 });
 
-// app.get('/api/courses/:catalog_nbr', (req, res) => {
-//     console.log(`GET request from ${req.url}`);
-//     Allcourses = []
-//     for(couse of courses){
-//         Allcourses.push([couse["subject"],couse['className']])
-//     }
-//     res.send(Allcourses);
-// });
+app.get('/api/courses/:subject', (req, res) => {
+    console.log(`GET request from ${req.url}`);
+    // const course_codes = courses.find(c => c.subject === req.params.subject);
+    course_codes = []
+    for(course of courses){
+        if(req.params.subject === course["subject"]){
+            course_codes.push(course["catalog_nbr"].toString())
+        }
+    }
+    if (!course_codes){
+        res.status(404).send('subject was not found')
+    }
+    res.send(course_codes)
+});
 
 app.listen(port, () => {
     console.log(courses[0]);
