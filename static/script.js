@@ -18,15 +18,17 @@ function getAllCourses(){
 
 function getSelectCourses(){
     const subject = document.getElementById('subject-name').value
-    console.log(subject)
     fetch("/api/courses/"+subject)
     .then(res => res.json()
     .then(data =>{
-            const l = document.getElementById('course-list-by-subject');
-            data.forEach(c =>{
-                const course = document.createElement('li')
-                course.appendChild(document.createTextNode(`Course Number: ${c}`))
-                l.appendChild(course)
+        const l = document.getElementById('course-list-by-subject');
+        while(l.firstChild ){
+            l.removeChild(l.firstChild );
+        }
+        data.forEach(c =>{
+            const course = document.createElement('li')
+            course.appendChild(document.createTextNode(`Course Number: ${c}`))
+            l.appendChild(course)
             })
             // console.log(data);
         })
