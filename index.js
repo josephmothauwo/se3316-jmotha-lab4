@@ -1,6 +1,8 @@
 var fs = require('fs');
 var data = fs.readFileSync("Lab3-timetable-data.json")
 var courses = JSON.parse(data)
+var schdeulesData = fs.readFileSync("schedules.json")
+var schedules = JSON.parse(schdeulesData)
 
 const express = require('express');
 const app = express(); 
@@ -69,12 +71,23 @@ router.get('/courses/:subject/:course_code/:course_component?', (req, res) => {
     res.send(tableEntry)
 });
 
-router.post('/schedule/', (req, res) => {
-    // filter course codes
-    const newSchedule = {
-        name: req.body.name
+router.post('/schedule', (req, res) => {
+    if(schedules.find(s => s.name === req.body.name)){
+        res.status(400).send('Name is already present')
+        return
     }
-    
+
+    const newSchedule = {
+        name: req.body.name,
+        course: [], 
+        length: schedules.length + 1
+    }
+    schedules.push(newSchedule)
+    var data = JSON.stringify(schedules)
+    fs.writeFile('schedules.json', data, (err) => {
+        if (err) throw err;
+      });
+    res.send(newSchedule)
 });
 
 app.use('/api', router);
