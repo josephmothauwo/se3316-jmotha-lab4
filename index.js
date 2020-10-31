@@ -42,10 +42,11 @@ router.get('/:subject/:course_code/:course_component?', (req, res) => {
     // filter course codes
     tableEntry = []
     if(!req.params.course_component){
-
         for(course of courses){
             if(req.params.subject === course["subject"] && req.params.course_code === course["catalog_nbr"].toString() ){
-                tableEntry.push(course["course_info"])
+                for(component of course["course_info"]){
+                    tableEntry.push(component)
+                }
             }
         }
     }

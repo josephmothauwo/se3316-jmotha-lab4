@@ -1,17 +1,17 @@
 document.getElementById("get-all-courses").addEventListener('click', getAllCourses);
 document.getElementById("find-course").addEventListener('click', getSelectCourses);
+document.getElementById("find-timetable-entry").addEventListener('click', getTimetableEntry);
 
 function getAllCourses(){
     fetch("api/courses/all")
     .then(res => res.json()
     .then(data =>{
-        const l = document.getElementById('courses-list');
+        const allCourseList = document.getElementById('courses-list');
         data.forEach(c =>{
             const course = document.createElement('li')
             course.appendChild(document.createTextNode(`Subject: ${c.subject} Class Name: ${c.className}`))
-            l.appendChild(course)
+            allCourseList.appendChild(course)
         })
-        // console.log(data);
     })
     )
 }
@@ -21,16 +21,44 @@ function getSelectCourses(){
     fetch("/api/courses/"+subject)
     .then(res => res.json()
     .then(data =>{
-        const l = document.getElementById('course-list-by-subject');
-        while(l.firstChild ){
-            l.removeChild(l.firstChild );
+        const selectCourseList = document.getElementById('course-list-by-subject');
+        while(selectCourseList.firstChild ){
+            selectCourseList.removeChild(selectCourseList.firstChild);
         }
         data.forEach(c =>{
             const course = document.createElement('li')
             course.appendChild(document.createTextNode(`Course Number: ${c}`))
-            l.appendChild(course)
+            selectCourseList.appendChild(course)
             })
-            // console.log(data);
         })
     )
+}
+
+function getTimetableEntry(){
+    const subjectEntry = document.getElementById('subject-name-timetable').value
+    const courseCode = document.getElementById('course-code-timetable').value
+    const component = document.getElementById('course-component-timetable').value
+    fetch(`/api/courses/${subjectEntry}/${courseCode}/${component}`)
+    .then(res => {
+        if (res.ok){
+            res.json()
+            .then(data =>{
+                const timetableEntries = document.getElementById('timetable-entries');
+                while(timetableEntries.firstChild ){
+                    timetableEntries.removeChild(timetableEntries.firstChild);
+                }
+                data.forEach(c =>{
+                    const course = document.createElement('li')
+                    course.appendChild(document.createTextNode(`Class Number: ${c.class_nbr} | Days: ${c.days.join(", ")} | Start Time: ${c.start_time} | Location: ${c.facility_ID}`))
+                    timetableEntries.appendChild(course)
+                    })
+                console.log(data)
+                })
+            .catch(console.log("failed to get object"))
+        }
+        else{
+            alert(`${res.status}, No timetable entries!`);
+        }
+    })
+    .catch()
 }
