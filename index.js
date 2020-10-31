@@ -8,7 +8,7 @@ const port = 3000
 const router = express.Router();
 
 // setup serving frontend code
-app.use('/',express.static('static'));
+app.use('/',  express.static('static'));
 
 // get list of classes
 router.get('/all', (req, res) => {
@@ -68,5 +68,5 @@ router.get('/:subject/:course_code/:course_component?', (req, res) => {
 app.use('/api/courses', router);
 
 app.listen(port, () => {
-    console.log(courses[0]);
+    
 });
