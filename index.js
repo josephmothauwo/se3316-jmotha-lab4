@@ -94,11 +94,16 @@ router.get('/courses/:subject/:course_code/:course_component?', (req, res) => {
 
 // add a new schdeule to the schdeules json file
 router.put('/schedules/:schedule_name', (req, res) => {
-    if(schedules.find(s => s.name.toUpperCase() === req.params.schedule_name.toUpperCase()) || validate(req.params.schedule_name)){
+    if(validate(req.params.schedule_name)){
         res.status(400).send('Name is already present or invalid name')
         return
     }
     const schedule_name = strip(req.params.schedule_name)
+
+    if(schedules.find(s => s.name.toUpperCase() === schedule_name.toUpperCase())){
+        res.status(400).send('Name is already present or invalid name')
+        return
+    }
     const newSchedule = {
         name: schedule_name,
         courses: [] 
@@ -137,29 +142,32 @@ router.delete('/schedules/:schedule_name', (req, res) => {
 router.put('/schedule/courses', (req, res) => {
     if(validate(req.body.scheduleName) || validate(req.body.subjectNames) || validate(req.body.courseNumbers)){
         res.status(400).send('invalid input')
+        return 
     }
-
     const scheduleName = strip(req.body.scheduleName)
     const subjectNames = strip(req.body.subjectNames)
     const courseNumbers = strip(req.body.courseNumbers)
-
+    
     const scheduleNum = schedules.findIndex(s => s.name.toUpperCase() === scheduleName)
     const subjectsArray = subjectNames.split(" ")
     const courseNumberArray = courseNumbers.split(" ")
-    if(scheduleNum < 0){
+    if(scheduleNum < 0 || subjectsArray.length!=courseNumberArray.length){
         res.status(400).send('schedule is not present')
         return
     }
     // check if items are in the schdeule already or not
     else{
         for(let i=0;i<subjectsArray.length;i++){
-            if(schedules[scheduleNum].courses.find(p => p[0] === subjectsArray[i]) && schedules[scheduleNum].courses.find(p => p[1] === courseNumberArray[i])){
-                schedules[scheduleNum].courses[i]=([subjectsArray[i],courseNumberArray[i]])
+            var flag = true;
+            for(let j=0;j<schedules[scheduleNum].courses.length;j++){
+                if(subjectsArray[i] === schedules[scheduleNum].courses[j][0] && courseNumberArray[i] === schedules[scheduleNum].courses[j][1]){
+                    schedules[scheduleNum].courses[j]=([subjectsArray[i],courseNumberArray[i]])
+                    flag = false
+                }
             }
-            else{
+            if(flag){
                 schedules[scheduleNum].courses.push([subjectsArray[i],courseNumberArray[i]])
             }
-            
         }
     }
     var data = JSON.stringify(schedules, null, 2)
@@ -218,6 +226,6 @@ function validate(inputString){
 }
 // input sanitization
 function strip(inputString){
-    const format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g;
+    const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g;
     return inputString.replace(format, "")
 }
