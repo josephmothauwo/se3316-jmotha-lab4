@@ -10,9 +10,6 @@ document.getElementById("delete-all-schedules").addEventListener('click', delete
 
 
 
-
-
-
 function getAllCourses(){
     fetch("api/courses/all")
     .then(res => res.json()
@@ -56,17 +53,28 @@ function getTimetableEntry(){
     .then(res => {
         if (res.ok){
             res.json()
+            
             .then(data =>{
+                console.log(data)
                 const timetableEntries = document.getElementById('timetable-entries');
                 while(timetableEntries.firstChild ){
                     timetableEntries.removeChild(timetableEntries.firstChild);
                 }
                 data.forEach(c =>{
                     const course = document.createElement('li')
-                    course.appendChild(document.createTextNode(`Class Number: ${c.class_nbr} | Days: ${c.days.join(", ")} | Start Time: ${c.start_time} | Location: ${c.facility_ID}`))
+                    course.appendChild(document.createTextNode(`Class Number: ${c.class_nbr} | Days: ${c.days.join(", ")} | Start Time: ${c.start_time} | Location: ${c.facility_ID} | Type: ${c.ssr_component}`))
+                    if(c.ssr_component === "LEC"){
+                        course.style.backgroundColor = "aqua"
+                    }
+                    else if(c.ssr_component === "LAB"){
+                        course.style.backgroundColor = "salmon"
+                    }
+                    else{
+                        course.style.backgroundColor = "palegreen"
+                    }
+
                     timetableEntries.appendChild(course)
                     })
-                console.log(data)
                 })
             .catch(console.log("failed to get object"))
         }
