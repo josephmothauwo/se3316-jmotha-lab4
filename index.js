@@ -10,6 +10,14 @@ const app = express();
 const port = 3000
 const router = express.Router();
 
+var http = require('http');
+const PORT = 3000;
+
+var server = http.createServer(handleRequest);
+
+server.listen(PORT);
+
+
 // parse data in body as JSON
 router.use(express.json());
 
