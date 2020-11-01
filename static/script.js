@@ -5,6 +5,8 @@ document.getElementById("make-schedule").addEventListener('click', setNewSchedul
 document.getElementById("add-courses").addEventListener('click', addCourses);
 document.getElementById("see-schedule-button").addEventListener('click', seeSelectedSchedule);
 document.getElementById("delete-schedule").addEventListener('click', deleteSchedule);
+document.getElementById("get-all-schedules").addEventListener('click', getAllSchdeules);
+
 
 
 
@@ -14,6 +16,9 @@ function getAllCourses(){
     .then(res => res.json()
     .then(data =>{
         const allCourseList = document.getElementById('courses-list');
+        while(allCourseList.firstChild ){
+            allCourseList.removeChild(allCourseList.firstChild);
+        }
         data.forEach(c =>{
             const course = document.createElement('li')
             course.appendChild(document.createTextNode(`Subject: ${c.subject} Class Name: ${c.className}`))
@@ -111,6 +116,23 @@ function deleteSchedule(){
         }
     })
     .catch()
+}
+
+function getAllSchdeules(){
+    fetch("api/schedule")
+    .then(res => res.json()
+    .then(data =>{
+        const allScheduleList = document.getElementById('schedules-list');
+        while(allScheduleList.firstChild ){
+            allScheduleList.removeChild(allScheduleList.firstChild);
+        }
+        data.forEach(s =>{
+            const schedule = document.createElement('li')
+            schedule.appendChild(document.createTextNode(`Schedule Name: ${s[0]} | Number of Courses: ${s[1]}`))
+            allScheduleList.appendChild(schedule)
+        })
+    })
+    )
 }
 
 function addCourses(){

@@ -127,6 +127,15 @@ router.put('/schedule/courses', (req, res) => {
     res.send(schedules[scheduleNum]) 
 });
 
+router.get('/schedule', (req, res) => {
+    console.log(`GET request from ${req.url}`);
+    let scheduleSummary = []
+    for(schedule of schedules){
+        scheduleSummary.push([schedule["name"],schedule["courses"].length])
+    }
+    res.send(scheduleSummary)
+});
+
 router.get('/schedule/:schedule_name', (req, res) => {
     console.log(`GET request from ${req.url}`);
     let coursesList = []

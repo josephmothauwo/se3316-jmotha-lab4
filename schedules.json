@@ -15,5 +15,17 @@
   {
     "name": "year2",
     "courses": []
+  },
+  {
+    "name": "year3",
+    "courses": []
+  },
+  {
+    "name": "courses",
+    "courses": []
+  },
+  {
+    "name": "year4",
+    "courses": []
   }
 ]
