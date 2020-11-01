@@ -55,7 +55,7 @@ router.get('/courses/:subject/:course_code/:course_component?', (req, res) => {
     // filter course codes
     const subject = strip(req.params.subject)
     const course_code = strip(req.params.course_code)
-    
+    // 2 different cases if the coursecomponent is given 
     tableEntry = []
     if(!req.params.course_component){
         for(course of courses){
@@ -145,7 +145,7 @@ router.put('/schedule/courses', (req, res) => {
         res.status(400).send('schedule is not present')
         return
     }
-    
+    // check if items are in the schdeule already or not
     else{
         for(let i=0;i<subjectsArray.length;i++){
             if(schedules[scheduleNum].courses.find(p => p[0] === subjectsArray[i]) && schedules[scheduleNum].courses.find(p => p[1] === courseNumberArray[i])){
@@ -210,11 +210,11 @@ app.use('/api', router);
 app.listen(port, () => {
     
 });
-
+// input validation
 function validate(inputString){
     return ((inputString.length<2) || (inputString.length>20))
 }
-
+// input sanitization
 function strip(inputString){
     const format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g;
     return inputString.replace(format, "")

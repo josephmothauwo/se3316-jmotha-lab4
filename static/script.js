@@ -1,4 +1,5 @@
 document.getElementById("get-all-courses").addEventListener('click', getAllCourses);
+// get all buttons
 document.getElementById("find-course").addEventListener('click', getSelectCourses);
 document.getElementById("find-timetable-entry").addEventListener('click', getTimetableEntry);
 document.getElementById("make-schedule").addEventListener('click', setNewSchedule);
@@ -7,7 +8,7 @@ document.getElementById("see-schedule-button").addEventListener('click', seeSele
 document.getElementById("delete-schedule").addEventListener('click', deleteSchedule);
 document.getElementById("get-all-schedules").addEventListener('click', getAllSchdeules);
 document.getElementById("delete-all-schedules").addEventListener('click', deleteAllSchedules);
-
+// get all the courses
 function getAllCourses(){
     fetch("api/all_courses")
     .then(res => res.json()
@@ -16,15 +17,16 @@ function getAllCourses(){
         while(allCourseList.firstChild ){
             allCourseList.removeChild(allCourseList.firstChild);
         }
+        // dynamically make list elements
         data.forEach(c =>{
             const course = document.createElement('li')
-            course.appendChild(document.createTextNode(`Subject: ${c.subject} Class Name: ${c.className}`))
+            course.appendChild(document.createTextNode(`Subject: ${c.subject} | Class Name: ${c.className}`))
             allCourseList.appendChild(course)
         })
     })
     )
 }
-
+// get course codes for a subject
 function getSelectCourses(){
     const subject = document.getElementById('subject-name').value
     fetch("/api/courses/"+subject.toUpperCase())
@@ -32,6 +34,7 @@ function getSelectCourses(){
         if (res.ok){
             res.json()
             .then(data =>{
+                 // dynamically make list elements
                 const selectCourseList = document.getElementById('course-list-by-subject');
                 while(selectCourseList.firstChild ){
                     selectCourseList.removeChild(selectCourseList.firstChild);
@@ -49,7 +52,7 @@ function getSelectCourses(){
     })
     .catch()
 }
-
+// get all course components
 function getTimetableEntry(){
     const subjectEntry = document.getElementById('subject-name-timetable').value.toUpperCase()
     const courseCode = document.getElementById('course-code-timetable').value.toUpperCase()
@@ -58,7 +61,7 @@ function getTimetableEntry(){
     .then(res => {
         if (res.ok){
             res.json()
-            
+             // dynamically make list elements
             .then(data =>{
                 console.log(data)
                 const timetableEntries = document.getElementById('timetable-entries');
@@ -68,6 +71,7 @@ function getTimetableEntry(){
                 data.forEach(c =>{
                     const course = document.createElement('li')
                     course.appendChild(document.createTextNode(`Class Number: ${c.class_nbr} | Days: ${c.days.join(", ")} | Start Time: ${c.start_time} | Location: ${c.facility_ID} | Type: ${c.ssr_component}`))
+                    // change colour background
                     if(c.ssr_component === "LEC"){
                         course.style.backgroundColor = "aqua"
                     }
@@ -90,7 +94,7 @@ function getTimetableEntry(){
     .catch()
 
 }
-
+// make a new schdeule with a name
 function setNewSchedule(){
     const scheduleName = document.getElementById('schedule-name').value
     fetch('/api/schedules/'+scheduleName,{
@@ -111,7 +115,7 @@ function setNewSchedule(){
     })
     .catch()
 }
-
+// delete all schedules
 function deleteAllSchedules(){
     fetch('/api/all_schedules',{
         method: 'DELETE',
@@ -131,7 +135,7 @@ function deleteAllSchedules(){
     })
     .catch()
 }
-
+// delete a specific schedule
 function deleteSchedule(){
     const scheduleName = document.getElementById('schedule-name').value
     fetch('/api/schedules/'+scheduleName,{
@@ -152,7 +156,7 @@ function deleteSchedule(){
     })
     .catch()
 }
-
+// see all schedules summary
 function getAllSchdeules(){
     fetch("api/all_schedules")
     .then(res => res.json()
@@ -169,7 +173,7 @@ function getAllSchdeules(){
     })
     )
 }
-
+// addcourses to a schedule
 function addCourses(){
     const scheduleCourses = {
         scheduleName: document.getElementById('add-schedule-name').value.toUpperCase(),
@@ -195,7 +199,7 @@ function addCourses(){
     })
     .catch()
 }
-
+// see a specifc schedule and courses inside it
 function seeSelectedSchedule(){
     const scheduleName = document.getElementById('selected-schedule-name').value.toUpperCase()
     fetch("/api/schedules/"+scheduleName)
@@ -203,6 +207,7 @@ function seeSelectedSchedule(){
         if (res.ok){
             res.json()
             .then(data =>{
+                 // dynamically make list elements
                 const scheduleCoursesList = document.getElementById('selected-schedule-courses-list');
                 while(scheduleCoursesList.firstChild ){
                     scheduleCoursesList.removeChild(scheduleCoursesList.firstChild);

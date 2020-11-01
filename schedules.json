@@ -1,43 +1,11 @@
 [
   {
-    "name": "year2",
+    "name": "year1",
     "courses": [
       [
         "ACTURSCI",
-        "1021C"
-      ],
-      [
-        "COMPSCI",
-        "1036"
-      ],
-      [
-        "ACTURSCI",
-        "1021C"
-      ],
-      [
-        "ACTURSCI",
-        "1021O"
-      ],
-      [
-        "ACTURSCI",
-        ""
-      ],
-      [
-        "FSDFSD",
-        "D"
+        "1021B"
       ]
     ]
-  },
-  {
-    "name": "FSDJKLFSDJL",
-    "courses": []
-  },
-  {
-    "name": "YEAR3",
-    "courses": []
-  },
-  {
-    "name": "fsdfsd",
-    "courses": []
   }
 ]
