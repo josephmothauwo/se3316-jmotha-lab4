@@ -6,6 +6,8 @@ document.getElementById("add-courses").addEventListener('click', addCourses);
 document.getElementById("see-schedule-button").addEventListener('click', seeSelectedSchedule);
 document.getElementById("delete-schedule").addEventListener('click', deleteSchedule);
 document.getElementById("get-all-schedules").addEventListener('click', getAllSchdeules);
+document.getElementById("delete-all-schedules").addEventListener('click', deleteAllSchedules);
+
 
 
 
@@ -78,7 +80,7 @@ function getTimetableEntry(){
 
 function setNewSchedule(){
     const scheduleName = document.getElementById('schedule-name').value
-    fetch('/api/schedule/'+scheduleName,{
+    fetch('/api/schedules/'+scheduleName,{
         method: 'PUT',
         headers: {'Content-type': 'application/json'},
     })
@@ -97,9 +99,29 @@ function setNewSchedule(){
     .catch()
 }
 
+function deleteAllSchedules(){
+    fetch('/api/schedule',{
+        method: 'DELETE',
+        headers: {'Content-type': 'application/json'},
+    })
+    .then(res => {
+        if (res.ok){
+            res.json()
+            .then(data =>{
+                console.log(data)
+                })
+            .catch(console.log("failed to get object"))
+        }
+        else{
+            alert(`${res.status}, Error`);
+        }
+    })
+    .catch()
+}
+
 function deleteSchedule(){
     const scheduleName = document.getElementById('schedule-name').value
-    fetch('/api/schedule/'+scheduleName,{
+    fetch('/api/schedules/'+scheduleName,{
         method: 'DELETE',
         headers: {'Content-type': 'application/json'},
     })

@@ -1,6 +1,6 @@
 [
   {
-    "name": "year1",
+    "name": "year2",
     "courses": [
       [
         "ACTURSCI",
@@ -13,19 +13,20 @@
     ]
   },
   {
-    "name": "year2",
-    "courses": []
-  },
-  {
-    "name": "year3",
-    "courses": []
-  },
-  {
     "name": "courses",
     "courses": []
   },
   {
-    "name": "year4",
-    "courses": []
+    "name": "year5",
+    "courses": [
+      [
+        "ACTURSCI",
+        "1021B"
+      ],
+      [
+        "COMPSCI",
+        "1036"
+      ]
+    ]
   }
 ]

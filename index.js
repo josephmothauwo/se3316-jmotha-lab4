@@ -72,7 +72,7 @@ router.get('/courses/:subject/:course_code/:course_component?', (req, res) => {
     res.send(tableEntry)
 });
 
-router.put('/schedule/:schedule_name', (req, res) => {
+router.put('/schedules/:schedule_name', (req, res) => {
     if(schedules.find(s => s.name === req.params.schedule_name)){
         res.status(400).send('Name is already present')
         return
@@ -89,7 +89,7 @@ router.put('/schedule/:schedule_name', (req, res) => {
     res.send(newSchedule) 
 });
 
-router.delete('/schedule/:schedule_name', (req, res) => {
+router.delete('/schedules/:schedule_name', (req, res) => {
     console.log(`DELETE request from ${req.url}`);
     const schedule = schedules.find(s => s.name === req.params.schedule_name)
     if(!schedule){
@@ -114,6 +114,7 @@ router.put('/schedule/courses', (req, res) => {
         res.status(400).send('schedule is not present')
         return
     }
+    
     else{
         schedules[scheduleNum].courses=[]
         for(let i=0;i<subjectsArray.length;i++){
@@ -134,6 +135,17 @@ router.get('/schedule', (req, res) => {
         scheduleSummary.push([schedule["name"],schedule["courses"].length])
     }
     res.send(scheduleSummary)
+});
+
+router.delete('/schedule', (req, res) => {
+    console.log(`GET request from ${req.url}`);
+    schedules = []
+    var data = JSON.stringify(schedules, null, 2)
+    fs.writeFile('schedules.json', data, (err) => {
+        if (err) throw err;
+    });
+
+    res.send(schedules)
 });
 
 router.get('/schedule/:schedule_name', (req, res) => {
