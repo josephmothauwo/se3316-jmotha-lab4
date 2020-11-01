@@ -72,15 +72,14 @@ router.get('/courses/:subject/:course_code/:course_component?', (req, res) => {
     res.send(tableEntry)
 });
 
-router.put('/schedule', (req, res) => {
-    if(schedules.find(s => s.name === req.body.name)){
+router.put('/schedule/:schedule_name', (req, res) => {
+    if(schedules.find(s => s.name === req.params.schedule_name)){
         res.status(400).send('Name is already present')
         return
     }
-    console.log(req.body)
     const newSchedule = {
-        name: req.body.name,
-        courses: [], 
+        name: req.params.schedule_name,
+        courses: [] 
     }
     schedules.push(newSchedule)
     var data = JSON.stringify(schedules, null, 2)
@@ -90,9 +89,26 @@ router.put('/schedule', (req, res) => {
     res.send(newSchedule) 
 });
 
+router.delete('/schedule/:schedule_name', (req, res) => {
+    console.log(`DELETE request from ${req.url}`);
+    const schedule = schedules.find(s => s.name === req.params.schedule_name)
+    if(!schedule){
+        res.status(400).send('No schedules by this name')
+        return
+    }
+    const index = schedules.indexOf(schedule)
+    schedules.splice(index,1)
+    var data = JSON.stringify(schedules, null, 2)
+    fs.writeFile('schedules.json', data, (err) => {
+        if (err) throw err;
+      });
+
+    res.send(schedule)
+});
+
 router.put('/schedule/courses', (req, res) => {
     const scheduleNum = schedules.findIndex(s => s.name === req.body.scheduleName)
-    const subjectsArray = req.body.subjects.split(" ")
+    const subjectsArray = req.body.subjectNames.split(" ")
     const courseNumberArray = req.body.courseNumbers.split(" ")
     if(scheduleNum < 0){
         res.status(400).send('schedule is not present')
@@ -109,6 +125,20 @@ router.put('/schedule/courses', (req, res) => {
         if (err) throw err;
       });
     res.send(schedules[scheduleNum]) 
+});
+
+router.get('/schedule/:schedule_name', (req, res) => {
+    console.log(`GET request from ${req.url}`);
+    let coursesList = []
+    for(schedule of schedules){
+        if (req.params.schedule_name === schedule["name"]){
+            coursesList = schedule["courses"]
+        }
+    }
+    if (coursesList.length === 0){
+        res.status(404).send('no schedule with that name')
+    }
+    res.send(coursesList)
 });
 
 app.use('/api', router);

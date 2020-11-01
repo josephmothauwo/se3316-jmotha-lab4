@@ -2,7 +2,10 @@ document.getElementById("get-all-courses").addEventListener('click', getAllCours
 document.getElementById("find-course").addEventListener('click', getSelectCourses);
 document.getElementById("find-timetable-entry").addEventListener('click', getTimetableEntry);
 document.getElementById("make-schedule").addEventListener('click', setNewSchedule);
-document.getElementById("add-courses").addEventListener('click', setNewSchedule);
+document.getElementById("add-courses").addEventListener('click', addCourses);
+document.getElementById("see-schedule-button").addEventListener('click', seeSelectedSchedule);
+document.getElementById("delete-schedule").addEventListener('click', deleteSchedule);
+
 
 
 
@@ -69,32 +72,57 @@ function getTimetableEntry(){
 }
 
 function setNewSchedule(){
-    const schedualeName = {
-        name: document.getElementById('schedule-name').value
-    }
-    fetch('/api/schedule',{
+    const scheduleName = document.getElementById('schedule-name').value
+    fetch('/api/schedule/'+scheduleName,{
         method: 'PUT',
         headers: {'Content-type': 'application/json'},
-        body: JSON.stringify(schedualeName)
     })
-
     .then(res => {
-        res.json()
-        .then(data => console.log(data))
-        .catch(console.log("failed to get JSON object"))
+        if (res.ok){
+            res.json()
+            .then(data =>{
+                console.log(data)
+                })
+            .catch(console.log("failed to get object"))
+        }
+        else{
+            alert(`${res.status}, already timetable with that name`);
+        }
     })
     .catch()
+}
 
+function deleteSchedule(){
+    const scheduleName = document.getElementById('schedule-name').value
+    fetch('/api/schedule/'+scheduleName,{
+        method: 'DELETE',
+        headers: {'Content-type': 'application/json'},
+    })
+    .then(res => {
+        if (res.ok){
+            res.json()
+            .then(data =>{
+                console.log(data)
+                })
+            .catch(console.log("failed to get object"))
+        }
+        else{
+            alert(`${res.status}, No Schedule with this name`);
+        }
+    })
+    .catch()
 }
 
 function addCourses(){
-    const schedualeName = {
-        name: document.getElementById('schedule-name').value
+    const scheduleCourses = {
+        scheduleName: document.getElementById('add-schedule-name').value,
+        subjectNames: document.getElementById('add-subject-name-timetable').value,
+        courseNumbers: document.getElementById('add-course-code-timetable').value,
     }
-    fetch('/api/schedule',{
+    fetch('/api/schedule/courses',{
         method: 'PUT',
         headers: {'Content-type': 'application/json'},
-        body: JSON.stringify(schedualeName)
+        body: JSON.stringify(scheduleCourses)
     })
 
     .then(res => {
@@ -102,6 +130,34 @@ function addCourses(){
         .then(data => console.log(data))
         .catch(console.log("failed to get JSON object"))
     })
-    .catch()
+    .catch(`${res.status}, No schdeule with that name!`)
+}
 
+function seeSelectedSchedule(){
+    const scheduleName = document.getElementById('selected-schedule-name').value
+    console.log(scheduleName)
+    fetch("/api/schedule/"+scheduleName)
+    .then(res => {
+        if (res.ok){
+            res.json()
+            .then(data =>{
+                const scheduleCoursesList = document.getElementById('selected-schedule-courses-list');
+                while(scheduleCoursesList.firstChild ){
+                    scheduleCoursesList.removeChild(scheduleCoursesList.firstChild);
+                }
+                data.forEach(c =>{
+                    const course = document.createElement('li')
+                    course.appendChild(document.createTextNode(`Subject: ${c[0]} | Course Code: ${c[1]} `))
+                    scheduleCoursesList.appendChild(course)
+                    })
+                console.log(data)
+                })
+            .catch(console.log("failed to get object"))
+        }
+        else{
+            alert(`${res.status}, No Schedules with that name`);
+        }
+    })
+    .catch()
+    
 }
