@@ -5,17 +5,14 @@ var schdeulesData = fs.readFileSync("schedules.json")
 var schedules = JSON.parse(schdeulesData)
 
 const express = require('express');
-const e = require('express');
 const app = express(); 
 const port = 3000
 const router = express.Router();
 
-var http = require('http');
-const PORT = 3000;
 
-var server = http.createServer(handleRequest);
-
-server.listen(PORT);
+app.listen(port, () => {
+    console.log(`listening on port ${port}`)
+});
 
 
 // parse data in body as JSON
@@ -215,9 +212,6 @@ router.get('/schedules/:schedule_name', (req, res) => {
 
 app.use('/api', router);
 
-app.listen(port, () => {
-    
-});
 // input validation
 function validate(inputString){
     return ((inputString.length<2) || (inputString.length>20))
