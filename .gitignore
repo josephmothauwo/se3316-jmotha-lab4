@@ -1,3 +1,2 @@
 node_modules/
-Lab3-timetable-data.json
-package-lock.json
+*.json
