@@ -5,6 +5,7 @@ var schdeulesData = fs.readFileSync("schedules.json")
 var schedules = JSON.parse(schdeulesData)
 
 const express = require('express');
+const e = require('express');
 const app = express(); 
 const port = 3000
 const router = express.Router();
@@ -86,8 +87,28 @@ router.put('/schedule', (req, res) => {
     fs.writeFile('schedules.json', data, (err) => {
         if (err) throw err;
       });
-    // console.log(newSchedule)
     res.send(newSchedule) 
+});
+
+router.put('/schedule/courses', (req, res) => {
+    const scheduleNum = schedules.findIndex(s => s.name === req.body.scheduleName)
+    const subjectsArray = req.body.subjects.split(" ")
+    const courseNumberArray = req.body.courseNumbers.split(" ")
+    if(scheduleNum < 0){
+        res.status(400).send('schedule is not present')
+        return
+    }
+    else{
+        schedules[scheduleNum].courses=[]
+        for(let i=0;i<subjectsArray.length;i++){
+            schedules[scheduleNum].courses.push([subjectsArray[i],courseNumberArray[i]])
+        }
+    }
+    var data = JSON.stringify(schedules, null, 2)
+    fs.writeFile('schedules.json', data, (err) => {
+        if (err) throw err;
+      });
+    res.send(schedules[scheduleNum]) 
 });
 
 app.use('/api', router);

@@ -2,6 +2,8 @@ document.getElementById("get-all-courses").addEventListener('click', getAllCours
 document.getElementById("find-course").addEventListener('click', getSelectCourses);
 document.getElementById("find-timetable-entry").addEventListener('click', getTimetableEntry);
 document.getElementById("make-schedule").addEventListener('click', setNewSchedule);
+document.getElementById("add-courses").addEventListener('click', setNewSchedule);
+
 
 
 function getAllCourses(){
@@ -67,6 +69,25 @@ function getTimetableEntry(){
 }
 
 function setNewSchedule(){
+    const schedualeName = {
+        name: document.getElementById('schedule-name').value
+    }
+    fetch('/api/schedule',{
+        method: 'PUT',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify(schedualeName)
+    })
+
+    .then(res => {
+        res.json()
+        .then(data => console.log(data))
+        .catch(console.log("failed to get JSON object"))
+    })
+    .catch()
+
+}
+
+function addCourses(){
     const schedualeName = {
         name: document.getElementById('schedule-name').value
     }
