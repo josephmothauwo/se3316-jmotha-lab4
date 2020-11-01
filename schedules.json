@@ -4,37 +4,40 @@
     "courses": [
       [
         "ACTURSCI",
-        "1021B"
+        "1021C"
       ],
       [
         "COMPSCI",
         "1036"
-      ]
-    ]
-  },
-  {
-    "name": "courses",
-    "courses": []
-  },
-  {
-    "name": "year5",
-    "courses": [
+      ],
       [
         "ACTURSCI",
-        "1021B"
+        "1021C"
       ],
       [
-        "COMPSCI",
-        "1036"
+        "ACTURSCI",
+        "1021O"
+      ],
+      [
+        "ACTURSCI",
+        ""
+      ],
+      [
+        "FSDFSD",
+        "D"
       ]
     ]
   },
   {
-    "name": "ක්",
+    "name": "FSDJKLFSDJL",
     "courses": []
   },
   {
-    "name": "හල් කිරිම",
+    "name": "YEAR3",
+    "courses": []
+  },
+  {
+    "name": "fsdfsd",
     "courses": []
   }
 ]

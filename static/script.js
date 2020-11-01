@@ -8,10 +8,8 @@ document.getElementById("delete-schedule").addEventListener('click', deleteSched
 document.getElementById("get-all-schedules").addEventListener('click', getAllSchdeules);
 document.getElementById("delete-all-schedules").addEventListener('click', deleteAllSchedules);
 
-
-
 function getAllCourses(){
-    fetch("api/courses/all")
+    fetch("api/all_courses")
     .then(res => res.json()
     .then(data =>{
         const allCourseList = document.getElementById('courses-list');
@@ -29,26 +27,33 @@ function getAllCourses(){
 
 function getSelectCourses(){
     const subject = document.getElementById('subject-name').value
-    fetch("/api/courses/"+subject)
-    .then(res => res.json()
-    .then(data =>{
-        const selectCourseList = document.getElementById('course-list-by-subject');
-        while(selectCourseList.firstChild ){
-            selectCourseList.removeChild(selectCourseList.firstChild);
+    fetch("/api/courses/"+subject.toUpperCase())
+    .then(res => {
+        if (res.ok){
+            res.json()
+            .then(data =>{
+                const selectCourseList = document.getElementById('course-list-by-subject');
+                while(selectCourseList.firstChild ){
+                    selectCourseList.removeChild(selectCourseList.firstChild);
+                }
+                data.forEach(c =>{
+                    const course = document.createElement('li')
+                    course.appendChild(document.createTextNode(`Course Number: ${c}`))
+                    selectCourseList.appendChild(course)
+                    })                })
+            .catch(err => console.log("failed to get object"))
         }
-        data.forEach(c =>{
-            const course = document.createElement('li')
-            course.appendChild(document.createTextNode(`Course Number: ${c}`))
-            selectCourseList.appendChild(course)
-            })
-        })
-    )
+        else{
+            alert(`${res.status}, invalid input or subject does not exist`);
+        }
+    })
+    .catch()
 }
 
 function getTimetableEntry(){
-    const subjectEntry = document.getElementById('subject-name-timetable').value
-    const courseCode = document.getElementById('course-code-timetable').value
-    const component = document.getElementById('course-component-timetable').value
+    const subjectEntry = document.getElementById('subject-name-timetable').value.toUpperCase()
+    const courseCode = document.getElementById('course-code-timetable').value.toUpperCase()
+    const component = document.getElementById('course-component-timetable').value.toUpperCase()
     fetch(`/api/courses/${subjectEntry}/${courseCode}/${component}`)
     .then(res => {
         if (res.ok){
@@ -76,10 +81,10 @@ function getTimetableEntry(){
                     timetableEntries.appendChild(course)
                     })
                 })
-            .catch(console.log("failed to get object"))
+            .catch(err => console.log("failed to get object"))
         }
         else{
-            alert(`${res.status}, No timetable entries!`);
+            alert(`${res.status}, No timetable entries! Or InvalidInput!`);
         }
     })
     .catch()
@@ -98,17 +103,17 @@ function setNewSchedule(){
             .then(data =>{
                 console.log(data)
                 })
-            .catch(console.log("failed to get object"))
+            .catch(err => console.log("failed to get object"))
         }
         else{
-            alert(`${res.status}, already timetable with that name`);
+            alert(`${res.status}, already timetable with that name or invalid timetable name`);
         }
     })
     .catch()
 }
 
 function deleteAllSchedules(){
-    fetch('/api/schedule',{
+    fetch('/api/all_schedules',{
         method: 'DELETE',
         headers: {'Content-type': 'application/json'},
     })
@@ -118,7 +123,7 @@ function deleteAllSchedules(){
             .then(data =>{
                 console.log(data)
                 })
-            .catch(console.log("failed to get object"))
+            .catch( err => console.log("failed to get object"))
         }
         else{
             alert(`${res.status}, Error`);
@@ -139,7 +144,7 @@ function deleteSchedule(){
             .then(data =>{
                 console.log(data)
                 })
-            .catch(console.log("failed to get object"))
+            .catch(err => console.log("failed to get object"))
         }
         else{
             alert(`${res.status}, No Schedule with this name`);
@@ -149,7 +154,7 @@ function deleteSchedule(){
 }
 
 function getAllSchdeules(){
-    fetch("api/schedule")
+    fetch("api/all_schedules")
     .then(res => res.json()
     .then(data =>{
         const allScheduleList = document.getElementById('schedules-list');
@@ -167,9 +172,9 @@ function getAllSchdeules(){
 
 function addCourses(){
     const scheduleCourses = {
-        scheduleName: document.getElementById('add-schedule-name').value,
-        subjectNames: document.getElementById('add-subject-name-timetable').value,
-        courseNumbers: document.getElementById('add-course-code-timetable').value,
+        scheduleName: document.getElementById('add-schedule-name').value.toUpperCase(),
+        subjectNames: document.getElementById('add-subject-name-timetable').value.toUpperCase(),
+        courseNumbers: document.getElementById('add-course-code-timetable').value.toUpperCase(),
     }
     fetch('/api/schedule/courses',{
         method: 'PUT',
@@ -178,17 +183,22 @@ function addCourses(){
     })
 
     .then(res => {
-        res.json()
-        .then(data => console.log(data))
-        .catch(console.log("failed to get JSON object"))
+        if (res.ok){
+            res.json()
+            .then(data => console.log(data))
+            .catch(err =>console.log("failed to get JSON object"))
+        }
+        else{
+            alert(`${res.status}, No Schedules with that name or Invalid Input`);
+        }
+        
     })
-    .catch(`${res.status}, No schdeule with that name!`)
+    .catch()
 }
 
 function seeSelectedSchedule(){
-    const scheduleName = document.getElementById('selected-schedule-name').value
-    console.log(scheduleName)
-    fetch("/api/schedule/"+scheduleName)
+    const scheduleName = document.getElementById('selected-schedule-name').value.toUpperCase()
+    fetch("/api/schedules/"+scheduleName)
     .then(res => {
         if (res.ok){
             res.json()
@@ -204,10 +214,10 @@ function seeSelectedSchedule(){
                     })
                 console.log(data)
                 })
-            .catch(console.log("failed to get object"))
+            .catch(err => console.log("failed to get object"))
         }
         else{
-            alert(`${res.status}, No Schedules with that name`);
+            alert(`${res.status}, No Schedules with that name or Schdeule is empty or invalid input`);
         }
     })
     .catch()

@@ -10,7 +10,9 @@
 <body>
 <!-- Place your content here -->
 <h1>Find courses at UWO and make a schedule!!!!</h1>
+<h4>All inputs must be alphanumeric and between 2 and 20 characters long :)</h4>
 
+<h3>Find all course codes for a given subject</h3>
 <div class="search-subject">
     <span>
         Subject: <input type="text" name="" id="subject-name">
@@ -19,24 +21,27 @@
     </span>
 </div>
 
+<h3>Find course componenets for a subject and course code</h3>
 <div class="getTimeTableEntry">
     <span>
         Subject: <input type="text" name="" id="subject-name-timetable">
         Course Code: <input type="text" name="" id="course-code-timetable">
         Course Component: <input type="text" name="" id="course-component-timetable">
         <button id="find-timetable-entry">Find Timetable entry</button>
-        <ol id = "timetable-entries"></ol>
+        <ol class="list" id = "timetable-entries"></ol>
     </span>
 </div>
 
+<h3>Make a new schdeule with a name</h3>
 <div class="make-scheduale">
     <span>
         Schedule Name <input type="text" name="" id="schedule-name">
         <button id="make-schedule">Make Schedule!</button>
-        <button id="delete-schedule">Delete Schedule :(</button>
+        <button  class="list"id="delete-schedule">Delete Schedule :(</button>
     </span>
 </div>
 
+<h3>Add courses to a schdeule</h3>
 <div class="add-courses-scheduale">
     <span>
         Subject(s): <input type="text" name="" id="add-subject-name-timetable">
@@ -46,14 +51,14 @@
     </span>
 </div>
 
+<h3>See one of your schdeules </h3>
 <div class="see-select-schedule">
     <span>
         Schedule Name: <input type="text" name="" id="selected-schedule-name">
         <button id="see-schedule-button">See this Schedule</button>
-        <ol id = "selected-schedule-courses-list"></ol>
+        <ol class="list" id = "selected-schedule-courses-list"></ol>
     </span>
 </div>
-
 <div class="allSchedules">
     <span>
         <h2>See all schedules summary !! </h2>
