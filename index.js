@@ -71,23 +71,23 @@ router.get('/courses/:subject/:course_code/:course_component?', (req, res) => {
     res.send(tableEntry)
 });
 
-router.post('/schedule', (req, res) => {
+router.put('/schedule', (req, res) => {
     if(schedules.find(s => s.name === req.body.name)){
         res.status(400).send('Name is already present')
         return
     }
-
+    console.log(req.body)
     const newSchedule = {
         name: req.body.name,
-        course: [], 
-        length: schedules.length + 1
+        courses: [], 
     }
     schedules.push(newSchedule)
-    var data = JSON.stringify(schedules)
+    var data = JSON.stringify(schedules, null, 2)
     fs.writeFile('schedules.json', data, (err) => {
         if (err) throw err;
       });
-    res.send(newSchedule)
+    // console.log(newSchedule)
+    res.send(newSchedule) 
 });
 
 app.use('/api', router);
