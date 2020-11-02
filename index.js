@@ -147,10 +147,27 @@ router.put('/schedule/courses', (req, res) => {
     const scheduleName = strip(req.body.scheduleName)
     const subjectNames = strip(req.body.subjectNames)
     const courseNumbers = strip(req.body.courseNumbers)
-    
+
     const scheduleNum = schedules.findIndex(s => s.name.toUpperCase() === scheduleName)
     const subjectsArray = subjectNames.split(" ")
     const courseNumberArray = courseNumbers.split(" ")
+
+    console.log(subjectsArray[0], )
+    for(let i = 0; i<subjectsArray.length;i++){
+        var flag2 = true
+        for(let j = 0;j<courses.length;j++){
+            if(subjectsArray[i]===courses[j].subject && courseNumberArray[i]===courses[j].catalog_nbr.toString()){
+                flag2 = false
+            }
+        }
+        if(flag2){
+            console.log("hi")
+            res.status(400).send('invalid input')
+        return 
+        }
+
+    }
+    
     if(scheduleNum < 0 || subjectsArray.length!=courseNumberArray.length){
         res.status(400).send('schedule is not present')
         return
