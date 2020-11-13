@@ -8,13 +8,14 @@ const express = require('express');
 const app = express(); 
 const port = 3000
 const router = express.Router();
+var cors = require('cors');
 
 
 app.listen(port, () => {
     console.log(`listening on port ${port}`)
 });
 
-
+app.use(cors());
 // parse data in body as JSON
 router.use(express.json());
 
