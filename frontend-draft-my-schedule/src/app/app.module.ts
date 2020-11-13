@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AllCoursesItemComponent } from './components/all-courses-item/all-courses-item.component';
 import { AllCoursesSearchComponent } from './components/all-courses-search/all-courses-search.component';
+import { CourseCodeSearchComponent } from './components/course-code-search/course-code-search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AllCoursesItemComponent,
-    AllCoursesSearchComponent
+    AllCoursesSearchComponent,
+    CourseCodeSearchComponent
   ],
   imports: [
     BrowserModule,

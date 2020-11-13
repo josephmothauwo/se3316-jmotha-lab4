@@ -1,0 +1,8 @@
+<div>
+    <h1>Find all course codes for a given subject</h1>
+    <input #box type="text">
+    <button (click)="getCourseCodes(box.value)">Find all course codes</button>
+    <ol>
+        <li *ngFor="let courseCode of courseCodes" [courseCode]="courseCode"> {{courseCode}}</li>
+    </ol>
+</div>
