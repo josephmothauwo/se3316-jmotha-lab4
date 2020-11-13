@@ -13,12 +13,13 @@ export class AllCoursesSearchComponent implements OnInit {
   constructor(private AllCoursesService:AllCoursesService) { }
 
   ngOnInit(): void {
+    
+  }
+
+  showCourses(){
     this.AllCoursesService.getCourses().subscribe(allCourses => {
       this.allCourses = allCourses
-      console.log(allCourses[0])
-    }
-
-    );
+    });
   }
 
 }

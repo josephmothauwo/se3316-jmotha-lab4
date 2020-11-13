@@ -1,7 +1,6 @@
 <h2>Search any course a UWO</h2>
 <input type="text">
-<button>Find Course</button>
+<button (click)="showCourses()">Find Course</button>
 <ol>
     <li *ngFor="let course of allCourses" [course]="course"> {{course.subject}} | {{course.className}}</li>
 </ol>
-<p>all-courses-item works!</p>
