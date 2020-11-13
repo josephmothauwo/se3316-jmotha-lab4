@@ -1,6 +1,9 @@
-<h2>Search any course a UWO</h2>
-<input type="text">
-<button (click)="showCourses()">Find Course</button>
-<ol>
-    <li *ngFor="let course of allCourses" [course]="course"> {{course.subject}} | {{course.className}}</li>
-</ol>
+<div class="allCoursesSearch">
+    <h2>See all courses a UWO</h2>
+    <button (click)="showCourses()">See all courses</button>
+    <ol>
+        <li *ngFor="let course of allCourses" [course]="course"> {{course.subject}} | {{course.className}}</li>
+    </ol>
+</div>
+
+
