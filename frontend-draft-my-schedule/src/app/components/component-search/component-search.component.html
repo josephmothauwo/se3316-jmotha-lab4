@@ -1,0 +1,13 @@
+<div>
+    <h2>Find all course codes for a given subject</h2>
+    <span>
+        Subject: <input #subject type="text">
+        Course Code: <input #courseCode type="text">
+        Course Component: <input #component type="text">
+        <button (click)="getCourseComponents(subject.value,courseCode.value,component.value)">Find all course codes</button>
+    </span>
+   
+    <ol>
+        <li *ngFor="let courseComponent of allCourseComponents" [courseComponent]="courseComponent">{{courseComponent.class_nbr}} | Days: {{courseComponent.days}} | Start Time: {{courseComponent.start_time}} | Location: {{courseComponent.facility_ID}} | Type: {{courseComponent.ssr_component}}</li>
+    </ol>
+</div>

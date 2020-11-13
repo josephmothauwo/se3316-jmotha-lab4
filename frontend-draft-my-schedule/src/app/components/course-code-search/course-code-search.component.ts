@@ -14,7 +14,7 @@ export class CourseCodeSearchComponent implements OnInit {
   }
 
   getCourseCodes(subject:string){
-    this.CourseCodeSearchService.getCourseCodes(subject).subscribe(allCourseCodes => {
+    this.CourseCodeSearchService.getCourseCodes(subject.toLocaleUpperCase()).subscribe(allCourseCodes => {
       this.courseCodes = allCourseCodes
     });
   }
