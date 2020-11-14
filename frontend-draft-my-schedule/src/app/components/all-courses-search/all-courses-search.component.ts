@@ -19,7 +19,11 @@ export class AllCoursesSearchComponent implements OnInit {
   showCourses(){
     this.AllCoursesService.getCourses().subscribe(allCourses => {
       this.allCourses = allCourses
-    });
+    },
+    (error) => {                              
+      window.alert('Sorry invalid input!')
+    }
+    )
   }
 
 }

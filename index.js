@@ -95,14 +95,15 @@ router.get('/courses/:subject/:course_code/:course_component?', (req, res) => {
 
 // add a new schdeule to the schdeules json file
 router.put('/schedules/:schedule_name', (req, res) => {
+    console.log(req.params.schedule_name)
     if(validate(req.params.schedule_name)){
-        res.status(400).send('Name is already present or invalid name')
+        res.status(404).send('Name is already present or invalid name')
         return
     }
     const schedule_name = strip(req.params.schedule_name)
 
     if(schedules.find(s => s.name.toUpperCase() === schedule_name.toUpperCase())){
-        res.status(400).send('Name is already present or invalid name')
+        res.status(404).send('Name is already present or invalid name')
         return
     }
     const newSchedule = {
@@ -121,13 +122,13 @@ router.put('/schedules/:schedule_name', (req, res) => {
 router.delete('/schedules/:schedule_name', (req, res) => {
     console.log(`DELETE request from ${req.url}`);
     if(validate(req.params.schedule_name)){
-        res.status(400).send('No schedules by this name')
+        res.status(404).send('No schedules by this name')
         return
     }
     const schedule_name = strip(req.params.schedule_name)
     const schedule = schedules.find(s => s.name.toUpperCase() === schedule_name.toUpperCase())
     if(!schedule){
-        res.status(400).send('No schedules by this name')
+        res.status(404).send('No schedules by this name')
         return
     }
     const index = schedules.indexOf(schedule)

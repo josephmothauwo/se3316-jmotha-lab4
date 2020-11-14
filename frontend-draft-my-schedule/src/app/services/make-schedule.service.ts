@@ -17,7 +17,7 @@ export class MakeScheduleService {
   constructor(private http:HttpClient) { }
 
   putScheduleName(name:string):Observable<any>{
-    console.log("put request for schedule");
+    console.log("put request for schedule",name);
     return this.http.put(`${this.scheduleNameURL}${name}`,null, httpOptions);
   }
   deleteSchedule(deleteName:string):Observable<any>{
