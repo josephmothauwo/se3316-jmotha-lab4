@@ -20,4 +20,7 @@ export class ScheduleSummaryComponent implements OnInit {
       this.scheduleSummary = schedule
     });
   }
+  deleteAllSchedules(){
+    this.ScheduleSummaryService.deleteAllSchedules().subscribe();
+  }
 }

@@ -14,5 +14,10 @@ export class ScheduleSummaryService {
     console.log("get request for all schedules!")
     return this.http.get<string[]>(`${this.schedulesURL}`);
   }
+  
+  deleteAllSchedules():Observable<any>{
+    console.log("delete request for all schedules!")
+    return this.http.delete(`${this.schedulesURL}`);
+  }
 
 }

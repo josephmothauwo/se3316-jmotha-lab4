@@ -1,6 +1,7 @@
 <div>
     <h2>See schedule summary</h2>
     <button (click)="getAllSchedules()">See summary</button>
+    <button (click)="deleteAllSchedules()">Delete All Schedules</button>
     <ol>
         <li *ngFor="let schedule of scheduleSummary" [schedule]="schedule"> Schedule Name: {{schedule[0]}} | Amount of Courses: {{schedule[1]}}</li>
     </ol>
