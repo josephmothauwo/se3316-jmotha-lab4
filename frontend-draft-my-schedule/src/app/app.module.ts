@@ -10,6 +10,7 @@ import { CourseCodeSearchComponent } from './components/course-code-search/cours
 import { ComponentSearchComponent } from './components/component-search/component-search.component';
 import { MakeScheduleComponent } from './components/make-schedule/make-schedule.component';
 import { AddCourseComponent } from './components/add-course/add-course.component';
+import { GetOneScheduleComponent } from './components/get-one-schedule/get-one-schedule.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AddCourseComponent } from './components/add-course/add-course.component
     CourseCodeSearchComponent,
     ComponentSearchComponent,
     MakeScheduleComponent,
-    AddCourseComponent
+    AddCourseComponent,
+    GetOneScheduleComponent
   ],
   imports: [
     BrowserModule,
