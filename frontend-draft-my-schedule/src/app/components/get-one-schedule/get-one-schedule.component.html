@@ -1,7 +1,7 @@
 <div>
     <h2>See courses in one Schedule</h2>
     <input #box type="text">
-    <button (click)="getOneSchedule(box.value)">Find all course codes</button>
+    <button (click)="getOneSchedule(box.value)">See schedule</button>
     <ol>
         <li *ngFor="let schedule of recievedSchedule" [schedule]="schedule"> {{schedule[0]}} | {{schedule[1]}}</li>
     </ol>
