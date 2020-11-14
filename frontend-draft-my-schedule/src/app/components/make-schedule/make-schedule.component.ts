@@ -17,4 +17,10 @@ export class MakeScheduleComponent implements OnInit {
       console.log(schedule);
     });
   }
+
+  deleteSchedule(deleteName:string){
+    this.MakeScheduleService.deleteSchedule(deleteName).subscribe(schedule => {
+      console.log(schedule);
+    });
+  }
 }

@@ -20,4 +20,8 @@ export class MakeScheduleService {
     console.log("put request for schedule");
     return this.http.put(`${this.scheduleNameURL}${name}`,null, httpOptions);
   }
+  deleteSchedule(deleteName:string):Observable<any>{
+    console.log("put request for schedule");
+    return this.http.delete(`${this.scheduleNameURL}${deleteName}`);
+  }
 }

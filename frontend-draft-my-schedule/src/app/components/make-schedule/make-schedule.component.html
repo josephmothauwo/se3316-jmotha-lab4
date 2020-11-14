@@ -2,5 +2,5 @@
     <h2>Make a Schedule</h2>
     <input #scheduleName type="text">
     <button (click) ="putScheduleName(scheduleName.value)" >Add Schedule</button>
-    <button >Delete Schedule</button>
+    <button (click) ="deleteSchedule(scheduleName.value)">Delete Schedule</button>
 </div>
