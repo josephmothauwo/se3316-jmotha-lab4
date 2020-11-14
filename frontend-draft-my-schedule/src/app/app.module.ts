@@ -8,6 +8,7 @@ import { AllCoursesItemComponent } from './components/all-courses-item/all-cours
 import { AllCoursesSearchComponent } from './components/all-courses-search/all-courses-search.component';
 import { CourseCodeSearchComponent } from './components/course-code-search/course-code-search.component';
 import { ComponentSearchComponent } from './components/component-search/component-search.component';
+import { MakeScheduleComponent } from './components/make-schedule/make-schedule.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ComponentSearchComponent } from './components/component-search/componen
     AllCoursesItemComponent,
     AllCoursesSearchComponent,
     CourseCodeSearchComponent,
-    ComponentSearchComponent
+    ComponentSearchComponent,
+    MakeScheduleComponent
   ],
   imports: [
     BrowserModule,

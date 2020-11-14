@@ -95,6 +95,7 @@ router.get('/courses/:subject/:course_code/:course_component?', (req, res) => {
 
 // add a new schdeule to the schdeules json file
 router.put('/schedules/:schedule_name', (req, res) => {
+    console.log(schedule_name)
     if(validate(req.params.schedule_name)){
         res.status(400).send('Name is already present or invalid name')
         return
