@@ -18,6 +18,6 @@ export class MakeScheduleService {
 
   putScheduleName(name:string):Observable<any>{
     console.log("put request for schedule");
-    return this.http.put(`${this.scheduleNameURL}${name}`,null,httpOptions);
+    return this.http.put(`${this.scheduleNameURL}${name}`,null, httpOptions);
   }
 }

@@ -142,6 +142,7 @@ router.delete('/schedules/:schedule_name', (req, res) => {
 });
 // add courses to a specific schedule
 router.put('/schedule/courses', (req, res) => {
+    // console.log(req.body.scheduleName,req.body.subjectNames, req.body.courseNumbers)
     if(validate(req.body.scheduleName) || validate(req.body.subjectNames) || validate(req.body.courseNumbers)){
         res.status(400).send('invalid input')
         return 
@@ -163,14 +164,15 @@ router.put('/schedule/courses', (req, res) => {
             }
         }
         if(flag2){
-            console.log("hi")
-            res.status(400).send('invalid input')
+            // console.log("hi")
+            res.status(404).send('invalid input')
         return 
         }
 
     }
     
     if(scheduleNum < 0 || subjectsArray.length!=courseNumberArray.length){
+        console.log(scheduleNum)
         res.status(400).send('schedule is not present')
         return
     }
