@@ -3,6 +3,6 @@
     <input #box type="text">
     <button (click)="getOneSchedule(box.value)">See schedule</button>
     <ol>
-        <li *ngFor="let schedule of recievedSchedule" [schedule]="schedule"> Subject: {{schedule.subject}} | Course Code: {{schedule.catalog_nbr}} | Time: {{schedule.start_time}}-{{schedule.end_time}} | Place: {{schedule.facility_ID}} | Days: {{schedule.days}} | Type: {{schedule.ssr_component}}</li>
+        <li *ngFor="let schedule of recievedSchedule" [ngStyle] ="{'background-color':(schedule.ssr_component=='LEC'? '#30D5C8' : (schedule.ssr_component=='LAB'? '#FF7F50' : '#b19cd9'))}"[schedule]="schedule"> Subject: {{schedule.subject}} | Course Code: {{schedule.catalog_nbr}} | Time: {{schedule.start_time}}-{{schedule.end_time}} | Place: {{schedule.facility_ID}} | Days: {{schedule.days}} | Type: {{schedule.ssr_component}}</li>
     </ol>
 </div>
