@@ -233,7 +233,6 @@ router.get('/schedules/:schedule_name', (req, res) => {
             for(course of schedule.courses){
                 for(let i = 0;i<courses.length;i++){
                     if(course[0]===courses[i].subject && course[1]==String(courses[i].catalog_nbr)){
-                        console.log("hi")
                         for(let j = 0;j<courses[i].course_info.length;j++){
                             coursesList.push({
                                 "subject": courses[i].subject,
