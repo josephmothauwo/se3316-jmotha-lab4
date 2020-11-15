@@ -221,7 +221,7 @@ router.delete('/all_schedules', (req, res) => {
 // get specific schedule
 router.get('/schedules/:schedule_name', (req, res) => {
     console.log(`GET request from ${req.url}`);
-    if(validate(req.params.schedule_name) || validate(req.params.schedule_name)){
+    if(validate(req.params.schedule_name) || sanitization(req.params.schedule_name)){
         res.status(400).send('invalid input')
         return
     }
