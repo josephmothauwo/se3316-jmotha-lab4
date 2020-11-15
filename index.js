@@ -155,7 +155,7 @@ router.put('/schedule/courses', (req, res) => {
     const subjectsArray = subjectNames.split(" ")
     const courseNumberArray = courseNumbers.split(" ")
 
-    console.log(subjectsArray[0], )
+    
     for(let i = 0; i<subjectsArray.length;i++){
         var flag2 = true
         for(let j = 0;j<courses.length;j++){
@@ -230,7 +230,24 @@ router.get('/schedules/:schedule_name', (req, res) => {
     let coursesList = []
     for(schedule of schedules){
         if (schedule_name === schedule.name.toUpperCase()){
-            coursesList = schedule.courses
+            for(course of schedule.courses){
+                for(let i = 0;i<courses.length;i++){
+                    if(course[0]===courses[i].subject && course[1]==String(courses[i].catalog_nbr)){
+                        console.log("hi")
+                        for(let j = 0;j<courses[i].course_info.length;j++){
+                            coursesList.push({
+                                "subject": courses[i].subject,
+                                "catalog_nbr": String(courses[i].catalog_nbr),
+                                "start_time": courses[i].course_info[j].start_time,
+                                "end_time": courses[i].course_info[j].end_time,
+                                "facility_ID": courses[i].course_info[j].facility_ID,
+                                "days": courses[i].course_info[j].days,
+                                "ssr_component": courses[i].course_info[j].ssr_component
+                            })
+                        }
+                    }
+                }
+            }
         }
     }
     if (coursesList.length === 0){
