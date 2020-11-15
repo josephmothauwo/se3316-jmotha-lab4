@@ -35,7 +35,7 @@ router.get('/all_courses', (req, res) => {
 // get courses codes by subject
 router.get('/courses/:subject', (req, res) => {
     console.log(`GET request from ${req.url}`);
-    if(validate(req.params.subject)){
+    if(validate(req.params.subject) || sanitization(req.params.subject)){
         res.status(404).send('subject was not found or invalid input')
     }
     // filter course codes
@@ -55,7 +55,7 @@ router.get('/courses/:subject', (req, res) => {
 // get time table entry by subject, course code and component
 router.get('/courses/:subject/:course_code/:course_component?', (req, res) => {
     console.log(`GET request from ${req.url}`);
-    if(validate(req.params.subject) ||validate(req.params.course_code)){
+    if(validate(req.params.subject) ||validate(req.params.course_code) || sanitization(req.params.subject) || sanitization(req.params.course_code)){
         res.status(404).send('invalid input')
     }
     // filter course codes
@@ -74,7 +74,7 @@ router.get('/courses/:subject/:course_code/:course_component?', (req, res) => {
     }
     
     else{
-        if(validate(req.params.course_component)){
+        if(validate(req.params.course_component) || sanitization(req.params.course_component)){
             res.status(404).send('invalid input')
         }
         const course_component = strip(req.params.course_component)
@@ -96,7 +96,7 @@ router.get('/courses/:subject/:course_code/:course_component?', (req, res) => {
 // add a new schdeule to the schdeules json file
 router.put('/schedules/:schedule_name', (req, res) => {
     console.log(req.params.schedule_name)
-    if(validate(req.params.schedule_name)){
+    if(validate(req.params.schedule_name) || sanitization(req.params.schedule_name)){
         res.status(404).send('Name is already present or invalid name')
         return
     }
@@ -121,7 +121,7 @@ router.put('/schedules/:schedule_name', (req, res) => {
 // delete a schdeule from the schdeule JSON file
 router.delete('/schedules/:schedule_name', (req, res) => {
     console.log(`DELETE request from ${req.url}`);
-    if(validate(req.params.schedule_name)){
+    if(validate(req.params.schedule_name) || sanitization(req.params.schedule_name)){
         res.status(404).send('No schedules by this name')
         return
     }
@@ -143,7 +143,7 @@ router.delete('/schedules/:schedule_name', (req, res) => {
 // add courses to a specific schedule
 router.put('/schedule/courses', (req, res) => {
     // console.log(req.body.scheduleName,req.body.subjectNames, req.body.courseNumbers)
-    if(validate(req.body.scheduleName) || validate(req.body.subjectNames) || validate(req.body.courseNumbers)){
+    if(validate(req.body.scheduleName) || validate(req.body.subjectNames) || validate(req.body.courseNumbers) || sanitization(req.body.scheduleName) || sanitization(req.body.subjectNames) || sanitization(req.body.courseNumbers)){
         res.status(400).send('invalid input')
         return 
     }
@@ -221,7 +221,7 @@ router.delete('/all_schedules', (req, res) => {
 // get specific schedule
 router.get('/schedules/:schedule_name', (req, res) => {
     console.log(`GET request from ${req.url}`);
-    if(validate(req.params.schedule_name)){
+    if(validate(req.params.schedule_name) || validate(req.params.schedule_name)){
         res.status(400).send('invalid input')
         return
     }
@@ -265,4 +265,16 @@ function validate(inputString){
 function strip(inputString){
     const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g;
     return inputString.replace(format, "")
+}
+
+function sanitization(inputString){
+    const format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g;
+    const output = inputString.replace(format, "");
+
+    if (inputString  === output){
+        return false
+    }
+    else{
+        return true;
+    }
 }

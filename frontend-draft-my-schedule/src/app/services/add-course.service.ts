@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http'
-import { Observable } from 'rxjs';
-// import { newCourse } from 'src/app/models/newCourse';
+import { Observable,throwError } from 'rxjs';
+import { retry, catchError } from 'rxjs/operators';
+
 
 
 const httpOptions = {
@@ -25,6 +26,15 @@ export class AddCourseService {
       subjectNames: subject.toLocaleUpperCase(),
       courseNumbers: courseCode.toLocaleUpperCase()
     };
-    return this.http.put(`${this.addCourseURL}`,body,httpOptions);
+    return this.http.put(`${this.addCourseURL}`,body,httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  handleError(error) {
+    let errorMessage = '';
+    window.alert(errorMessage+"Invalid Input!!!");
+    return throwError(errorMessage);
   }
 }
