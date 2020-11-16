@@ -7,7 +7,8 @@ import { retry, catchError } from 'rxjs/operators';
 })
 export class CourseCodeSearchService {
 
-  coursesURL: string = 'http://localhost:3000/api/courses/';
+  // coursesURL: string = 'http://localhost:3000/api/courses/';
+  coursesURL: string = '/api/courses/';
 
   constructor(private http:HttpClient) { }
 

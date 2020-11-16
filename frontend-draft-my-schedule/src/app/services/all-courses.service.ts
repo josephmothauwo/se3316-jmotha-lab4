@@ -7,7 +7,8 @@ import { retry, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AllCoursesService {
-  coursesURL: string = 'http://localhost:3000/api/all_courses';
+  // coursesURL: string = 'http://localhost:3000/api/all_courses';
+  coursesURL: string = '/api/all_courses';
 
   constructor(private http:HttpClient) { }
 

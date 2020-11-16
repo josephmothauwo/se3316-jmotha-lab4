@@ -13,7 +13,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class MakeScheduleService {
-  scheduleNameURL: string = 'http://localhost:3000/api/schedules/';
+  // scheduleNameURL: string = 'http://localhost:3000/api/schedules/';
+  scheduleNameURL: string = '/api/schedules/';
+
   constructor(private http:HttpClient) { }
 
   putScheduleName(name:string):Observable<any>{

@@ -16,7 +16,8 @@ const httpOptions = {
 })
 export class AddCourseService {
 
-  addCourseURL: string = 'http://localhost:3000/api/schedule/courses';
+  // addCourseURL: string = 'http://localhost:3000/api/schedule/courses';
+  addCourseURL: string = '/api/schedule/courses';
   constructor(private http:HttpClient) { }
 
   putCourse(subject:string, courseCode:string, scheduleName:string):Observable<any>{

@@ -8,7 +8,8 @@ import { retry, catchError } from 'rxjs/operators';
 })
 export class CourseComponentService {
 
-  courseComponentsURL: string = 'http://localhost:3000/api/courses/';
+  // courseComponentsURL: string = 'http://localhost:3000/api/courses/';
+  courseComponentsURL: string = '/api/courses/';
 
   constructor(private http:HttpClient) { }
 
