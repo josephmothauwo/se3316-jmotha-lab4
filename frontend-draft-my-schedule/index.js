@@ -20,7 +20,7 @@ app.use(cors());
 router.use(express.json());
 
 // setup serving frontend code
-app.use('/',  express.static('dist/frontend-draft-my-schedule/index.html'));
+app.use('/',  express.static('dist/frontend-draft-my-schedule'));
 
 // get list of classes
 router.get('/all_courses', (req, res) => {
